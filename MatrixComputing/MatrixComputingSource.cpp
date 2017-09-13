@@ -79,7 +79,8 @@ void addParallelInvoke(Mat m1, Mat m2, Mat&r, int rows, int cols, int t)
 {
 	std::cout << "Creating result matrix... ";
 	r = createMat(rows, cols);
-	std::cout << "Matrix created. Threading started:\t";
+	generateMatrix(r, rows, cols, 0);
+	std::cout << "Matrix created. Threading started with ["<<t<<"] threads:\t";
 
 	Timer::reset();
 	std::vector<std::thread> thrs;
@@ -87,7 +88,12 @@ void addParallelInvoke(Mat m1, Mat m2, Mat&r, int rows, int cols, int t)
 	{
 		int from = (rows / t)*i;
 		int to = (rows / t)*(i+1);
+		if (i + 1 == t)
+		{
+			to = rows;
+		}
 		thrs.emplace_back(_partialAdd, m1, m2, r, rows, cols, from, to);
+		//thrs.push_back(std::thread(_partialAdd, m1, m2, r, rows, cols, from, to))
 	}
 	for (auto& i : thrs)
 	{
@@ -107,7 +113,9 @@ bool checkAdding(Mat r, int rows, int cols, int val)
 				return false;
 			}
 		}
+		delete r[i];
 	}
+	delete r;
 	return true;
 }
 
@@ -115,6 +123,7 @@ int main()
 {
 	int rows=5000;
 	int cols = 5000;
+	int threads = 2;
 	Timer::reset();
 	std::cout << "Creating matrix " << rows << "x" << cols << ":\t";
 	Mat m1 = createMat(rows, cols);
@@ -131,10 +140,18 @@ int main()
 	Timer::show();
 	std::cout << std::endl;
 
-	Mat rAsync;
-	addParallelInvoke(m1, m2, rAsync, rows, cols, 4);
-	std::cout << std::endl;
-	std::cout << "Is adding successsfully: " << std::boolalpha << checkAdding(rAsync, rows, cols, 1);
+	for (; threads < 50; threads++)
+	{
+		Mat rAsync;
+		addParallelInvoke(m1, m2, rAsync, rows, cols, threads);
+		std::cout << std::endl;
+		bool isAddSuccess = checkAdding(rAsync, rows, cols, 1);
+		//std::cout << "Is adding successsfully: " << std::boolalpha <<  << std::endl << std::endl;
+		if (!isAddSuccess)
+		{
+			std::cout << "Error while adding: " << std::endl;
+		}
+	}
 
 	std::getchar();
 	return 0;
