@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parallel Computing", "Parallel Computing\Parallel Computing.vcxproj", "{CD3DC909-79EF-4866-8053-68FD00B5DE49}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleThreads", "Parallel Computing\Parallel Computing.vcxproj", "{CD3DC909-79EF-4866-8053-68FD00B5DE49}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixComputing", "MatrixComputing\MatrixComputing.vcxproj", "{399CD311-3B36-478D-8456-1C088AB92ADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{CD3DC909-79EF-4866-8053-68FD00B5DE49}.Release|x64.Build.0 = Release|x64
 		{CD3DC909-79EF-4866-8053-68FD00B5DE49}.Release|x86.ActiveCfg = Release|Win32
 		{CD3DC909-79EF-4866-8053-68FD00B5DE49}.Release|x86.Build.0 = Release|Win32
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Debug|x64.ActiveCfg = Debug|x64
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Debug|x64.Build.0 = Debug|x64
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Debug|x86.ActiveCfg = Debug|Win32
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Debug|x86.Build.0 = Debug|Win32
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Release|x64.ActiveCfg = Release|x64
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Release|x64.Build.0 = Release|x64
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Release|x86.ActiveCfg = Release|Win32
+		{399CD311-3B36-478D-8456-1C088AB92ADF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
