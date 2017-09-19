@@ -51,31 +51,30 @@ void printMatrix(Mat mat, int rows, int cols)
 	}
 }
 
-void add(Mat m1, Mat m2, Mat& r, int rows, int cols, int mult = 1)
+void add(Mat m1, Mat m2, Mat& r, int rows, int cols, int op(int, int))
 {
 	r = createMat(rows, cols);
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
 		{
-			r[i][j] = m1[i][j] + m2[i][j];
-			r[i][j] *= mult;
+			r[i][j] = op(m1[i][j], m2[i][j]);
 		}
 	}
 }
 
-void _partialAdd(Mat m1, Mat m2, Mat r, int rows, int cols, int from, int to)
+void _partialAdd(Mat m1, Mat m2, Mat r, int rows, int cols, int from, int to, int op(int,int))
 {
 	for (int i = from; i < to; i++)
 	{
 		for (int j = 0; j < cols; j++)
 		{
-			r[i][j] = m1[i][j] + m2[i][j];
+			r[i][j] = op(m1[i][j], m2[i][j]);
 		}
 	}
 }
 
-void addParallelInvoke(Mat m1, Mat m2, Mat&r, int rows, int cols, int t)
+void addParallelInvoke(Mat m1, Mat m2, Mat&r, int rows, int cols, int t, int op(int,int))
 {
 	std::cout << "Creating result matrix... ";
 	r = createMat(rows, cols);
@@ -92,7 +91,7 @@ void addParallelInvoke(Mat m1, Mat m2, Mat&r, int rows, int cols, int t)
 		{
 			to = rows;
 		}
-		thrs.emplace_back(_partialAdd, m1, m2, r, rows, cols, from, to);
+		thrs.emplace_back(_partialAdd, m1, m2, r, rows, cols, from, to, op);
 		//thrs.push_back(std::thread(_partialAdd, m1, m2, r, rows, cols, from, to))
 	}
 	for (auto& i : thrs)
@@ -118,6 +117,11 @@ bool checkAdding(Mat r, int rows, int cols, int val)
 	delete r;
 	return true;
 }
+void foo();
+void bar(void funct());
+
+int addOp(int a, int b) { return a + b; }
+int subOp(int a, int b) { return a - b; }
 
 int main()
 {
@@ -136,17 +140,16 @@ int main()
 	Timer::reset();
 	Mat r;
 	std::cout << "Adding matrix successively:\t";
-	add(m1, m2, r, rows, cols);
+	add(m1, m2, r, rows, cols, addOp);
 	Timer::show();
 	std::cout << std::endl;
 
 	for (; threads < 50; threads++)
 	{
 		Mat rAsync;
-		addParallelInvoke(m1, m2, rAsync, rows, cols, threads);
+		addParallelInvoke(m1, m2, rAsync, rows, cols, threads, addOp);
 		std::cout << std::endl;
 		bool isAddSuccess = checkAdding(rAsync, rows, cols, 1);
-		//std::cout << "Is adding successsfully: " << std::boolalpha <<  << std::endl << std::endl;
 		if (!isAddSuccess)
 		{
 			std::cout << "Error while adding: " << std::endl;
@@ -155,4 +158,14 @@ int main()
 
 	std::getchar();
 	return 0;
+}
+
+void foo()
+{
+	std::cout << "foo" << std::endl;
+}
+
+void bar(void funct())
+{
+	funct();
 }
