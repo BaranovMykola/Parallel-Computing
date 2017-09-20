@@ -45,3 +45,27 @@ void printMatrix(Mat mat, int rows, int cols)
 		std::cout << std::endl;
 	}
 }
+
+bool isMatrixEqual(Mat A, Mat B, int m, int n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (A[i][j] != B[i][j])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void deallocate(Mat A, int m, int n)
+{
+	for (int i = 0; i < m; i++)
+	{
+		delete A[i];
+	}
+	delete A;
+}

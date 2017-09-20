@@ -6,15 +6,14 @@
 #include "Timer.h"
 #include "MatrixProcessing.h"
 #include "MatrixAdding.h"
+#include "MatrixMultiply.h"
 
 typedef int** Mat;
 
 
-
-
-int main()
+int matrixAddingSample()
 {
-	int rows=5000;
+	int rows = 5000;
 	int cols = 5000;
 	int threads = 2;
 	Timer::reset();
@@ -25,7 +24,7 @@ int main()
 	generateMatrix((Mat)m2, rows, cols, 1);
 	Timer::show();
 	std::cout << std::endl;
-	
+
 	Timer::reset();
 	Mat r;
 	std::cout << "Adding matrix successively:\t";
@@ -44,17 +43,45 @@ int main()
 			std::cout << "Error while adding: " << std::endl;
 		}
 	}
+	std::getchar();
+	return 0;
+}
+
+int matrixMultiplingSample()
+{
+	int m = 4000;
+	int n = 4000;
+	int k = 4000;
+	Mat A = createMat(m, n);
+	Mat B = createMat(n, k);
+	
+	generateMatrix(A, m, n);
+	generateMatrix(B, n, k);
+
+	std::cout << "Multplying matrix successively: ";
+	Timer::reset();
+	//Mat C_ord = multiply(A, B, m,n,k);
+	Timer::show();
+	for (int p = 4; p < 100; p++)
+	{
+		if (p > 10)
+		{
+			p += 4;
+		}
+		std::cout << "Multplying matrix parallel in [" << p << "]threads: ";
+		Timer::reset();
+		Mat C_paral = multiplyParallelInvoke(A, B, m, n, k, p);
+		Timer::show();
+		//std::cout << "Processing success: " << std::boolalpha << isMatrixEqual(C_ord, C_paral, m,k) << std::endl;
+		deallocate(C_paral,m,k);
+	}
+
 
 	std::getchar();
 	return 0;
 }
 
-void foo()
+int main()
 {
-	std::cout << "foo" << std::endl;
-}
-
-void bar(void funct())
-{
-	funct();
+	matrixMultiplingSample();
 }
