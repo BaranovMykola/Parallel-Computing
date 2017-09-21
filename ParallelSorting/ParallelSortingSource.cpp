@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Sort.h"
 
-int main()
+#include <gtest\gtest.h>
+
+void runtest()
 {
-	auto arr = createRandArr(10, 1, 10);
-	quickSort(arr, 0, 9);
-	for (int i = 0; i < 10; i++)
-	{
-		std::cout << arr[i] << " ";
-	}
+}
+
+int main(int argc, char** argv)
+{
 	std::getchar();
 	return 0;
 }
