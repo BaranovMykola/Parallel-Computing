@@ -40,7 +40,7 @@ void quickSort(int arr[], int left, int right)
 		quickSort(arr, i, right);
 }
 
-int partialquickSort(int arr[], int left, int right)
+int partialquickSort(int arr[], int left, int right, bool sort)
 {
 	int i = left, j = right;
 	int tmp;
@@ -67,13 +67,14 @@ int partialquickSort(int arr[], int left, int right)
 	/* recursion */
 	if (left < j)
 	{
+		if(sort)
 		quickSort(arr, left, j);
-
 		q.push_back(std::make_pair(left, j));
 	}
 	if (i < right)
 	{
 		q.push_back(std::make_pair(i, right));
+		if(sort)
 		quickSort(arr, i, right);
 	}
 
@@ -95,14 +96,14 @@ void quickSortParallel(int*& arr, int size)
 	std::nth_element(arr+size/2, arr + (int)thoffset, arr + size);*/
 
 	std::vector<int> pins;
-	int half = partialquickSort(arr, 0, size - 1);
-	int quadr = partialquickSort(arr, 0, half);
-	int th = partialquickSort(arr, half, size-1);
+	int half = partialquickSort(arr, 0, size - 1,false);
+	int quadr = partialquickSort(arr, 0, half,false);
+	int th = partialquickSort(arr, half, size-1,false);
 	pins.insert(pins.end(), {0,quadr, half, th, size-1});
 
 	for (int i = 0; i < 4; i++)
 	{
-		t.emplace_back(partialquickSort, arr, pins[i], pins[i + 1]);
+		t.emplace_back(partialquickSort, arr, pins[i], pins[i + 1], true);
 	}
 
 	for (auto& i : t)
