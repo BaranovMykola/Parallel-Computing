@@ -4,8 +4,8 @@
 #include "Sort.h"
 #include "Sort.cpp"
 
-const int ArraySizeAlg = 1000;
-const int ArraySeedAlg = 1;
+const int ArraySizeAlg = 12;
+const int ArraySeedAlg = 2;
 const int ArraySizePerf = 1000000;
 const int ArraySeedPerf = 1;
 bool isSorted(int arr[], int size);
@@ -22,7 +22,7 @@ TEST(TestAlg, quickSortOrdinary)
 
 TEST(TestAlg, quickSortParallel)
 {
-	int* arr = createRandArr(ArraySizeAlg, ArraySeedAlg);
+	int* arr = createRandArr(ArraySizeAlg, ArraySeedAlg, 10);
 	quickSortParallel(arr, ArraySizeAlg);
 	EXPECT_TRUE(isSorted(arr, ArraySizeAlg));
 }
