@@ -36,7 +36,7 @@ void quickSortParallel(int arr[], int size)
 
 }
 
-static int* createRandArr(int size, int seed, int upper = INT_MAX)
+int* createRandArr(int size, int seed, int upper)
 {
 	int* arr = new int[size];
 	srand(seed);
