@@ -31,13 +31,18 @@ void quickSort(int arr[], int left, int right)
 		quickSort(arr, i, right);
 }
 
-//static int* createRandArr(int size, int seed, int upper = INT_MAX)
-//{
-//	int* arr = new int[size];
-//	srand(seed);
-//	for (int i = 0; i < size; i++)
-//	{
-//		arr[i] = rand() % upper;
-//	}
-//	return arr;
-//}
+void quickSortParallel(int arr[], int size)
+{
+
+}
+
+static int* createRandArr(int size, int seed, int upper = INT_MAX)
+{
+	int* arr = new int[size];
+	srand(seed);
+	for (int i = 0; i < size; i++)
+	{
+		arr[i] = rand() % upper;
+	}
+	return arr;
+}

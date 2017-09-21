@@ -3,7 +3,7 @@
 
 void quickSort(int arr[], int left, int right);
 
-static int* createRandArr(int size, int seed, int upper)
+static int* createRandArr(int size, int seed, int upper = INT_MAX)
 {
 		int* arr = new int[size];
 		srand(seed);
