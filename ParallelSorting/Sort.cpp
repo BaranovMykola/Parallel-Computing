@@ -81,10 +81,21 @@ void quickSortParallel(int*& arr, int size)
 	std::vector<std::thread> t;
 	std::vector<std::future<std::vector<interval>>> f;
 	
+	int thoffset = size*(2 / 3.0);
+	std::vector<int> pins = { 0,size / 4,size / 2,thoffset,size - 1 };
 	std::nth_element(arr, arr + size / 2, arr + size);
 	std::nth_element(arr, arr + size / 4, arr + size/2);
-	int thoffset = size*(2 / 3.0);
 	std::nth_element(arr+size/2, arr + (int)thoffset, arr + size);
+
+	for (int i = 0; i < 4; i++)
+	{
+		t.emplace_back(partialquickSort, arr, pins[i], pins[i + 1]);
+	}
+
+	for (auto& i : t)
+	{
+		i.join();
+	}
 
 
 	
