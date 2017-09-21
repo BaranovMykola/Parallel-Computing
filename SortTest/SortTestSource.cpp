@@ -5,7 +5,7 @@
 #include "Sort.cpp"
 
 const int ArraySizeAlg = 12;
-const int ArraySeedAlg = 2;
+const int ArraySeedAlg = 3;
 const int ArraySizePerf = 10000000;
 const int ArraySeedPerf = 1;
 bool isSorted(int arr[], int size);

@@ -40,7 +40,7 @@ void quickSort(int arr[], int left, int right)
 		quickSort(arr, i, right);
 }
 
-std::vector<interval> partialquickSort(int arr[], int left, int right)
+int partialquickSort(int arr[], int left, int right)
 {
 	int i = left, j = right;
 	int tmp;
@@ -66,11 +66,18 @@ std::vector<interval> partialquickSort(int arr[], int left, int right)
 	std::vector<interval> q;
 	/* recursion */
 	if (left < j)
-		//quickSort(arr, left, j);
+	{
+		quickSort(arr, left, j);
+
 		q.push_back(std::make_pair(left, j));
+	}
 	if (i < right)
+	{
 		q.push_back(std::make_pair(i, right));
-	return q;
+		quickSort(arr, i, right);
+	}
+
+	return arr[i] == pivot ? i : j;
 }
 std::vector<interval> foo() { return std::vector<interval>(); }
 
@@ -82,10 +89,16 @@ void quickSortParallel(int*& arr, int size)
 	std::vector<std::future<std::vector<interval>>> f;
 	
 	int thoffset = size*(2 / 3.0);
-	std::vector<int> pins = { 0,size / 4,size / 2,thoffset,size - 1 };
+	/*std::vector<int> pins = { 0,size / 4,size / 2,thoffset,size - 1 };
 	std::nth_element(arr, arr + size / 2, arr + size);
 	std::nth_element(arr, arr + size / 4, arr + size/2);
-	std::nth_element(arr+size/2, arr + (int)thoffset, arr + size);
+	std::nth_element(arr+size/2, arr + (int)thoffset, arr + size);*/
+
+	std::vector<int> pins;
+	int half = partialquickSort(arr, 0, size - 1);
+	int quadr = partialquickSort(arr, 0, half);
+	int th = partialquickSort(arr, half, size-1);
+	pins.insert(pins.end(), {0,quadr, half, th, size-1});
 
 	for (int i = 0; i < 4; i++)
 	{
