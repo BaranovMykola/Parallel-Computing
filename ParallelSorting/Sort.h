@@ -1,10 +1,13 @@
 #pragma once
 #include <stdlib.h>
+#include <vector>
 
 void quickSort(int arr[], int left, int right);
 
-int* merge(int * arr, int size, int p);
+void quickSortParallel(int*& arr, int size, int n = 5);
 
-int getMinInterval(int * arr, int min, int size, int p, std::vector<int> merged);
+int partialquickSort(int arr[], int left, int right);
 
 int* createRandArr(int size, int seed, int upper = INT_MAX);
+
+

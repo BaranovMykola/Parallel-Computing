@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixComputing", "MatrixCo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParallelSorting", "ParallelSorting\ParallelSorting.vcxproj", "{16A4CE9A-DB2A-4FEE-B6E6-3AC886C5317C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SortTest", "SortTest\SortTest.vcxproj", "{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,14 +41,6 @@ Global
 		{16A4CE9A-DB2A-4FEE-B6E6-3AC886C5317C}.Release|x64.Build.0 = Release|x64
 		{16A4CE9A-DB2A-4FEE-B6E6-3AC886C5317C}.Release|x86.ActiveCfg = Release|Win32
 		{16A4CE9A-DB2A-4FEE-B6E6-3AC886C5317C}.Release|x86.Build.0 = Release|Win32
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Debug|x64.ActiveCfg = Debug|x64
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Debug|x64.Build.0 = Debug|x64
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Debug|x86.ActiveCfg = Debug|Win32
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Debug|x86.Build.0 = Debug|Win32
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Release|x64.ActiveCfg = Release|x64
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Release|x64.Build.0 = Release|x64
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Release|x86.ActiveCfg = Release|Win32
-		{EB986D7D-19FA-4154-A153-6E65C5DFC6F0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
