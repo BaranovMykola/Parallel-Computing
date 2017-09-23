@@ -40,7 +40,7 @@ void quickSort(int arr[], int left, int right)
 		quickSort(arr, i, right);
 }
 
-int partialquickSort(int arr[], int left, int right, bool sort)
+int partialquickSort(int arr[], int left, int right)
 {
 	int i = left, j = right;
 	int tmp;
@@ -62,31 +62,6 @@ int partialquickSort(int arr[], int left, int right, bool sort)
 			j--;
 		}
 	};
-
-	if (!sort)
-	{
-		std::vector<interval> q;
-		if (left < j)
-		{
-			q.push_back(std::make_pair(left, j));
-		}
-		if (i < right)
-		{
-			q.push_back(std::make_pair(i, right));
-		}
-	}
-	else
-	{
-		if (left < j)
-		{
-			quickSort(arr, left, j);
-		}
-		if (i < right)
-		{
-			quickSort(arr, i, right);
-		}
-	}
-
 	return arr[i] == pivot ? i : j;
 }
 std::vector<interval> foo() { return std::vector<interval>(); }
@@ -97,9 +72,17 @@ void quickSortParallel(int*& arr, int size)
 	std::vector<std::thread> t;
 
 	std::vector<int> pins;
-	int half = partialquickSort(arr, 0, size - 1,false);
-	int quadr = partialquickSort(arr, 0, half,false);
-	int th = partialquickSort(arr, half, size-1,false);
+	int half = partialquickSort(arr, 0, size - 1);
+	/*int quadr = partialquickSort(arr, 0, half);
+	int th = partialquickSort(arr, half, size-1);*/
+	int quadr;
+	int th;
+
+	auto q1 = std::async(partialquickSort, arr, 0, half);
+	auto t1 = std::async(partialquickSort, arr, half, size - 1);
+	quadr = q1.get();
+	th = t1.get();
+
 	pins.insert(pins.end(), {0,quadr, half, th, size-1});
 
 	for (int i = 0; i < 4; i++)

@@ -6,7 +6,7 @@
 
 const int ArraySizeAlg = 12;
 const int ArraySeedAlg = 3;
-const int ArraySizePerf = 60000000;
+const int ArraySizePerf = 10000000;
 const int ArraySeedPerf = 21;
 bool isSorted(int arr[], int size);
 int* performanceArrOrdinary = nullptr;
