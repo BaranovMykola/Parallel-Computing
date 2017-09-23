@@ -6,6 +6,8 @@
 #include <queue>
 #include <future>
 #include <chrono>
+#include <set>
+#include <iterator>
 
 typedef std::pair<int, int> interval;
 using namespace std::chrono_literals;
@@ -68,24 +70,52 @@ std::vector<interval> foo() { return std::vector<interval>(); }
 
 void quickSortParallel(int*& arr, int size)
 {
-	int p = 4;
+	int n = 5;
+	int p = pow(2,n);
 	std::vector<std::thread> t;
 
 	std::vector<int> pins;
+	//int half = partialquickSort(arr, 0, size - 1);
+	///*int quadr = partialquickSort(arr, 0, half);
+	//int th = partialquickSort(arr, half, size-1);*/
+	//int quadr;
+	//int th;
+
+	//auto q1 = std::async(partialquickSort, arr, 0, half);
+	//auto t1 = std::async(partialquickSort, arr, half, size - 1);
+	//quadr = q1.get();
+	//th = t1.get();
+
+	//pins.insert(pins.end(), {0,quadr, half, th, size-1});
+
+	std::set<int> ints;
+	ints.insert(0);
+	ints.insert(size-1);
 	int half = partialquickSort(arr, 0, size - 1);
-	/*int quadr = partialquickSort(arr, 0, half);
-	int th = partialquickSort(arr, half, size-1);*/
-	int quadr;
-	int th;
+	ints.insert(half);
 
-	auto q1 = std::async(partialquickSort, arr, 0, half);
-	auto t1 = std::async(partialquickSort, arr, half, size - 1);
-	quadr = q1.get();
-	th = t1.get();
+	int k = 2;
+	while (k < p)
+	{
+		std::vector<std::future<int>> pins;
 
-	pins.insert(pins.end(), {0,quadr, half, th, size-1});
+		for (int j = 0; j < ints.size()-1; j++)
+		{
+			pins.emplace_back(std::async(partialquickSort, arr, *std::next(ints.begin(), j), *std::next(ints.begin(), j+1)));
+		}
 
-	for (int i = 0; i < 4; i++)
+		for (auto& i : pins)
+		{
+			ints.insert(i.get());
+			++k;
+		}
+	}
+	
+	pins.clear();
+	std::copy(ints.begin(), ints.end(), std::back_inserter(pins));
+	
+
+	for (int i = 0; i < pins.size()-1; i++)
 	{
 		t.emplace_back(quickSort, arr, pins[i], pins[i + 1]);
 	}
