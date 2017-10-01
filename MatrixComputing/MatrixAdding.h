@@ -1,5 +1,5 @@
 #pragma once
-typedef int** Mat;
+#include "MatrixProcessing.h"
 
 void add(Mat m1, Mat m2, Mat & r, int rows, int cols, int op(int, int));
 

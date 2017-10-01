@@ -7,8 +7,7 @@
 #include "MatrixProcessing.h"
 #include "MatrixAdding.h"
 #include "MatrixMultiply.h"
-
-typedef int** Mat;
+#include "GaussianMethod.h"
 
 
 int matrixAddingSample()
@@ -81,7 +80,18 @@ int matrixMultiplingSample()
 	return 0;
 }
 
+int GaussianMethodSample()
+{
+	int n = 4;
+	Mat A = createMat(n,n);
+	generateMatrix(A, n, n);
+	Mat B = createMat(n, 1);
+	generateMatrix(B, n, 1);
+	solveGaussian(A, B, n);
+	return 0;
+}
+
 int main()
 {
-	matrixMultiplingSample();
+	return GaussianMethodSample();
 }

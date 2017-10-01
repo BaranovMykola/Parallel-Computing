@@ -4,10 +4,10 @@
 
 Mat createMat(int rows, int cols)
 {
-	Mat m = new int*[rows];
+	Mat m = new double*[rows];
 	for (int i = 0; i < rows; i++)
 	{
-		m[i] = new int[cols];
+		m[i] = new double[cols];
 	}
 	return m;
 }

@@ -1,5 +1,5 @@
 #pragma once
-typedef int** Mat;
+typedef double** Mat;
 
 Mat createMat(int rows, int cols);
 

@@ -1,5 +1,5 @@
 #pragma once
-typedef int** Mat;
+#include "MatrixProcessing.h"
 
 Mat multiply(Mat A, Mat B, int m, int n, int k);
 

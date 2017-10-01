@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GaussianMethod.cpp" />
     <ClCompile Include="MatrixAdding.cpp" />
     <ClCompile Include="MatrixComputingSource.cpp" />
     <ClCompile Include="MatrixMultiply.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GaussianMethod.h" />
     <ClInclude Include="MatrixAdding.h" />
     <ClInclude Include="MatrixMultiply.h" />
     <ClInclude Include="MatrixProcessing.h" />
