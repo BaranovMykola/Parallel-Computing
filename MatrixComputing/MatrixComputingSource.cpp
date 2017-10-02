@@ -48,9 +48,9 @@ int matrixAddingSample()
 
 int matrixMultiplingSample()
 {
-	int m = 4000;
-	int n = 4000;
-	int k = 4000;
+	int m = 800;
+	int n = 800;
+	int k = 800;
 	Mat A = createMat(m, n);
 	Mat B = createMat(n, k);
 	
@@ -59,7 +59,7 @@ int matrixMultiplingSample()
 
 	std::cout << "Multplying matrix successively: ";
 	Timer::reset();
-	//Mat C_ord = multiply(A, B, m,n,k);
+	Mat C_ord = multiply(A, B, m,n,k);
 	Timer::show();
 	for (int p = 4; p < 100; p++)
 	{
@@ -82,12 +82,26 @@ int matrixMultiplingSample()
 
 int GaussianMethodSample()
 {
-	int n = 4;
-	Mat A = createMat(n,n);
-	generateMatrix(A, n, n);
-	Mat B = createMat(n, 1);
-	generateMatrix(B, n, 1);
-	solveGaussian(A, B, n);
+	int n = 100;
+		Timer::reset();
+		std::cout << "Creating system " << n << " x " << n << " ";
+		Mat A = createMat(n, n);
+		Mat B = createMat(n, 1);
+		generateMatrix(A, n, n);
+		generateMatrix(B, n, 1);
+		Mat A_paral = createMat(n, n);
+		Mat B_paral = createMat(n, 1);
+		generateMatrix(A_paral, n, n);
+		generateMatrix(B_paral, n, 1);
+		Timer::show();
+		Timer::reset();
+		std::cout << "Started solution process " << std::endl;
+		std::thread ord(solveGaussian, A, B, n);
+		std::thread paral(solveGaussianParallel, A_paral, B_paral, n, 4);
+		ord.join();
+		paral.join();
+		Timer::show();
+		system("pause");
 	return 0;
 }
 

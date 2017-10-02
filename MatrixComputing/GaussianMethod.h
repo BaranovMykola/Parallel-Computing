@@ -8,3 +8,5 @@ void makeTMat(Mat T, Mat A, int n, int k);
 
 Mat solveGaussian(Mat A, Mat B, int n);
 
+Mat solveGaussianParallel(Mat A, Mat B, int n, int p);
+
