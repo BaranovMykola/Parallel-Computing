@@ -15,4 +15,6 @@ int findMainIndex(Vec Cb, Mat a, int m, int k);
 
 void updateB(Vec* Cb, Mat a, int r, int k, int m);
 
-void updateA(Mat* a, int m, int n, int r, int k);
+bool updateA(Mat* a, int m, int n, int r, int k, int from=0, int to=0);
+
+void updateAParallel(Mat * a, int m, int n, int r, int k, int p);

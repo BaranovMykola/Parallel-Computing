@@ -108,75 +108,28 @@ int GaussianMethodSample()
 
 int symplexMethodSample()
 {
-	int dim = 6;
-	int cond = 3;
+	int dim = 2000;
+	int cond = 1000;
 	Mat C = createMat(1, dim);
 	Mat p = createMat(cond, dim+1);
+	generateMatrix(C, 1, dim+1,0);
+	generateMatrix(C, 1, dim-cond);
+	generateMatrix(p, cond, dim);
+
+	//printMatrix(C, 1, dim);
+	double ord = 0;
+	Timer::reset();
+	ord = symplexMethod(C, p, dim, cond);
+	Timer::show();
+
+	C = createMat(1, dim);
+	p = createMat(cond, dim + 1);
 	generateMatrix(C, 1, dim, 0);
-	C[0][0] = 9;
-	C[0][1] = 10;
-	C[0][2] = 16;
-
-	generateMatrix(p, cond, dim, 0);
-
-	p[0][0] = 18;
-	p[0][1] = 15;
-	p[0][2] = 12;
-	p[0][3] = 1;
-	p[0][4] = 0;
-	p[0][5] = 0;
-	p[0][6] = 360;
-
-	p[1][0] = 6;
-	p[1][1] = 4;
-	p[1][2] = 8;
-	p[1][3] = 0;
-	p[1][4] = 1;
-	p[1][5] = 0;
-	p[1][6] = 192;
-
-	p[2][0] = 5;
-	p[2][1] = 3;
-	p[2][2] = 3;
-	p[2][3] = 0;
-	p[2][4] = 0;
-	p[2][5] = 1;
-	p[2][6] = 180;
-
-
-	auto ord = symplexMethod(C, p, dim, cond);
-
-
-	/*C[0][0] = 9;
-	C[0][1] = 10;
-	C[0][2] = 16;
-
-	p[0][0] = 18;
-	p[0][1] = 15;
-	p[0][2] = 12;
-	p[0][3] = 1;
-	p[0][4] = 0;
-	p[0][5] = 0;
-	p[0][6] = 360;
-
-	p[1][0] = 6;
-	p[1][1] = 4;
-	p[1][2] = 8;
-	p[1][3] = 0;
-	p[1][4] = 1;
-	p[1][5] = 0;
-	p[1][6] = 192;
-
-	p[2][0] = 5;
-	p[2][1] = 3;
-	p[2][2] = 3;
-	p[2][3] = 0;
-	p[2][4] = 0;
-	p[2][5] = 1;
-	p[2][6] = 180;
-
-	auto paral = symplexMethodParallel(C, p, dim + 1, cond);*/
-
+	generateMatrix(C, 1, dim-cond);
+	generateMatrix(p, cond, dim+1);
+	Timer::reset();
+	auto paral = symplexMethodParallel(C, p, dim + 1, cond);
+	Timer::show();
 	//std::cout << "Correct: " << std::boolalpha << (paral == ord) << std::endl;
 	std::cout << "Ord: " << ord << std::endl;
 	
