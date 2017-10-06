@@ -8,6 +8,7 @@
 #include "MatrixAdding.h"
 #include "MatrixMultiply.h"
 #include "GaussianMethod.h"
+#include "SymplexMethod.h"
 
 
 int matrixAddingSample()
@@ -105,7 +106,51 @@ int GaussianMethodSample()
 	return 0;
 }
 
+int symplexMethodSample()
+{
+	int dim = 6;
+	int cond = 3;
+	Mat C = createMat(1, dim);
+	Mat p = createMat(cond, dim+1);
+	generateMatrix(C, 1, dim, 0);
+	C[0][0] = 9;
+	C[0][1] = 10;
+	C[0][2] = 16;
+
+	generateMatrix(p, cond, dim, 0);
+
+	p[0][0] = 18;
+	p[0][1] = 15;
+	p[0][2] = 12;
+	p[0][3] = 1;
+	p[0][4] = 0;
+	p[0][5] = 0;
+	p[0][6] = 360;
+
+	p[1][0] = 6;
+	p[1][1] = 4;
+	p[1][2] = 8;
+	p[1][3] = 0;
+	p[1][4] = 1;
+	p[1][5] = 0;
+	p[1][6] = 192;
+
+	p[2][0] = 5;
+	p[2][1] = 3;
+	p[2][2] = 3;
+	p[2][3] = 0;
+	p[2][4] = 0;
+	p[2][5] = 1;
+	p[2][6] = 180;
+
+
+	symplexMethod(C, p, dim, cond);
+	
+	system("pause");
+	return 0;
+}
+
 int main()
 {
-	return GaussianMethodSample();
+	return symplexMethodSample();
 }

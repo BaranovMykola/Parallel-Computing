@@ -69,3 +69,11 @@ void deallocate(Mat A, int m, int n)
 	}
 	delete A;
 }
+
+void printVec(Vec v, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << v[i] << std::endl;
+	}
+}
