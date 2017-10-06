@@ -116,10 +116,9 @@ int symplexMethodSample()
 	generateMatrix(C, 1, dim-cond);
 	generateMatrix(p, cond, dim);
 
-	//printMatrix(C, 1, dim);
-	double ord = 0;
 	Timer::reset();
-	ord = symplexMethod(C, p, dim, cond);
+	std::cout << "Ordinary symplex method... ";
+	symplexMethod(C, p, dim, cond);
 	Timer::show();
 
 	C = createMat(1, dim);
@@ -127,12 +126,13 @@ int symplexMethodSample()
 	generateMatrix(C, 1, dim, 0);
 	generateMatrix(C, 1, dim-cond);
 	generateMatrix(p, cond, dim+1);
-	Timer::reset();
-	auto paral = symplexMethodParallel(C, p, dim + 1, cond);
-	Timer::show();
-	//std::cout << "Correct: " << std::boolalpha << (paral == ord) << std::endl;
-	std::cout << "Ord: " << ord << std::endl;
-	
+	for (int t = 2; t < 10; t++)
+	{
+		std::cout << "Parallel symple method in " << t << " threads... ";
+		Timer::reset();
+		symplexMethodParallel(C, p, dim + 1, cond, t);
+		Timer::show();
+	}
 	system("pause");
 	return 0;
 }

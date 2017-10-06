@@ -3,7 +3,7 @@
 
 double symplexMethod(Mat C, Mat a, int n, int m);
 
-double symplexMethodParallel(Mat C, Mat a, int n, int m);
+double symplexMethodParallel(Mat C, Mat a, int n, int m, int p);
 
 Vec extractVecB(Mat a, int n, int m);
 
