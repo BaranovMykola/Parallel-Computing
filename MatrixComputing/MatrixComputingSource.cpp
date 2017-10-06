@@ -144,7 +144,41 @@ int symplexMethodSample()
 	p[2][6] = 180;
 
 
-	symplexMethod(C, p, dim, cond);
+	auto ord = symplexMethod(C, p, dim, cond);
+
+
+	/*C[0][0] = 9;
+	C[0][1] = 10;
+	C[0][2] = 16;
+
+	p[0][0] = 18;
+	p[0][1] = 15;
+	p[0][2] = 12;
+	p[0][3] = 1;
+	p[0][4] = 0;
+	p[0][5] = 0;
+	p[0][6] = 360;
+
+	p[1][0] = 6;
+	p[1][1] = 4;
+	p[1][2] = 8;
+	p[1][3] = 0;
+	p[1][4] = 1;
+	p[1][5] = 0;
+	p[1][6] = 192;
+
+	p[2][0] = 5;
+	p[2][1] = 3;
+	p[2][2] = 3;
+	p[2][3] = 0;
+	p[2][4] = 0;
+	p[2][5] = 1;
+	p[2][6] = 180;
+
+	auto paral = symplexMethodParallel(C, p, dim + 1, cond);*/
+
+	//std::cout << "Correct: " << std::boolalpha << (paral == ord) << std::endl;
+	std::cout << "Ord: " << ord << std::endl;
 	
 	system("pause");
 	return 0;

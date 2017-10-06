@@ -2,6 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <numeric>
+#include <thread>
+#include <future>
 
 using std::cout;
 using std::endl;
@@ -37,11 +39,10 @@ double symplexMethod(Mat C, Mat a, int n, int m)
 			break;
 		};
 
-		updateB(P0, a, r, k, m);
+		updateB(&P0, a, r, k, m);
 
-		//printVec(P0, m);
 
-		updateA(a, m, n, r, k);
+		updateA(&a, m, n, r, k);
 		updateDelta(delta, Cb, C, a, m, n);
 		cout << "==============================" << endl;
 	}
@@ -55,6 +56,55 @@ double symplexMethod(Mat C, Mat a, int n, int m)
 	return std::accumulate(functSeries, functSeries + n, 0.0);
 
 
+}
+
+double symplexMethodParallel(Mat C, Mat a, int n, int m)
+{
+	Vec P0 = extractVecB(a, n, m);
+	Vec b = P0;
+	Mat _Cb = createMat(1, m);
+	generateMatrix(_Cb, 1, m, 0);
+	Vec Cb = _Cb[0];
+
+	Vec delta = createMat(1, n)[0];
+	updateDelta(delta, Cb, C, a, m, n);
+	do
+	{
+
+		cout << "P0" << endl;
+		printVec(P0, m);
+		cout << "a" << endl;
+		printMatrix(a, m, n);
+		cout << "delta" << endl;
+		printVec(delta, n);
+
+		int minDeltaIndex = findMinDeltaIndex(delta, n);
+		int k = minDeltaIndex;
+		int r = findMainIndex(P0, a, m, k);
+		Cb[r] = C[0][k];
+		cout << "Cb" << endl;
+		printVec(Cb, m);
+		if (delta[k] >= 0)
+		{
+			break;
+		};
+
+		//std::thread th1(updateB, P0, a, r, k, m);
+		//std::thread th2(updateA, a, m, n, r, k);
+		//th1.join();
+		//th2.join();
+
+		updateDelta(delta, Cb, C, a, m, n);
+		cout << "==============================" << endl;
+	}
+	while (true);
+
+	cout << "Stopped" << endl;
+
+	//printMatrix(a, m, n);
+	Vec functSeries = createMat(1, m)[0];
+	std::transform(Cb, Cb + m, P0, functSeries, [](double a, double b) { return a*b; });
+	return std::accumulate(functSeries, functSeries + n, 0.0);
 }
 
 
@@ -100,28 +150,28 @@ int findMainIndex(Vec Cb, Mat a, int m, int k)
 	return index;
 }
 
-void updateB(Vec& P0, Mat a, int r, int k, int m)
+void updateB(Vec* P0, Mat a, int r, int k, int m)
 {
-	Vec b = P0;
+	Vec b = *P0;
 	Vec _b = createMat(1, m)[0];
 	for (int i = 0; i < m; i++)
 	{
 		_b[i] = i == r ? b[r] / a[r][k] : b[i] - (b[r] / a[r][k])*a[i][k];
 	}
-	P0 = _b;
+	*P0 = _b;
 	// DEALOCATE
 }
 
-void updateA(Mat& a, int m, int n, int r, int k)
+void updateA(Mat* a, int m, int n, int r, int k)
 {
 	Mat _a = createMat(m, n);
 	for (int i = 0; i < m; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			_a[i][j] = i == r ? a[r][j] / a[r][k] : a[i][j] - (a[r][j] / a[r][k])*a[i][k];
+			_a[i][j] = i == r ? (*a)[r][j] / (*a)[r][k] : (*a)[i][j] - ((*a)[r][j] / (*a)[r][k])*(*a)[i][k];
 		}
 	}
-	deallocate(a, m, n);
-	a = _a;
+	deallocate(*a, m, n);
+	*a = _a;
 }
