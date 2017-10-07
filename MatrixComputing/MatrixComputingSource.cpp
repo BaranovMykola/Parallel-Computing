@@ -142,14 +142,17 @@ int minMaxSearchSample()
 {
 	int r = 10000;
 	int c = 10000;
+	Timer::reset();
+	std::cout << "Creating matrix " << r << "x" << c << std::endl;
 	Mat mat = createMat(r,c);
 	generateMatrix(mat, r,c);
-	//std::cout << "Result: " << maxMinSearch(mat, r, c) << std::endl;
-	for (int p = 1; p < 10; p++)
+	std::cout << "Created. ";
+	Timer::show();
+	for (int p = 1; p < 30; p++)
 	{
 		Timer::reset();
 		std::cout << "[" << p << "] thread..." << std::endl;
-		std::cout << "Max min = " << searchMaxMin(mat, r, c, p) << std::endl;
+		std::cout << "Max min = " << searchMaxMinParallel(mat, r, c, p) << std::endl;
 		Timer::show();
 	}
 	system("pause");
