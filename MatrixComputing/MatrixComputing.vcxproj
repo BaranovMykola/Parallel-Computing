@@ -145,6 +145,7 @@
     <ClCompile Include="GaussianMethod.cpp" />
     <ClCompile Include="MatrixAdding.cpp" />
     <ClCompile Include="MatrixComputingSource.cpp" />
+    <ClCompile Include="MatrixMinMax.cpp" />
     <ClCompile Include="MatrixMultiply.cpp" />
     <ClCompile Include="MatrixProcessing.cpp" />
     <ClCompile Include="SymplexMethod.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="GaussianMethod.h" />
     <ClInclude Include="MatrixAdding.h" />
+    <ClInclude Include="MatrixMinMax.h" />
     <ClInclude Include="MatrixMultiply.h" />
     <ClInclude Include="MatrixProcessing.h" />
     <ClInclude Include="SymplexMethod.h" />

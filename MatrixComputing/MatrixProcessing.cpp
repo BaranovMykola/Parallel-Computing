@@ -4,6 +4,10 @@
 
 Mat createMat(int rows, int cols)
 {
+	if (rows*cols * 8 > 1000000000 / 2)
+	{
+		int a = 0;
+	}
 	Mat m = new double*[rows];
 	for (int i = 0; i < rows; i++)
 	{

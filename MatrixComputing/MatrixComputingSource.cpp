@@ -9,6 +9,7 @@
 #include "MatrixMultiply.h"
 #include "GaussianMethod.h"
 #include "SymplexMethod.h"
+#include "MatrixMinMax.h"
 
 
 int matrixAddingSample()
@@ -137,7 +138,25 @@ int symplexMethodSample()
 	return 0;
 }
 
+int minMaxSearchSample()
+{
+	int r = 10000;
+	int c = 10000;
+	Mat mat = createMat(r,c);
+	generateMatrix(mat, r,c);
+	//std::cout << "Result: " << maxMinSearch(mat, r, c) << std::endl;
+	for (int p = 1; p < 10; p++)
+	{
+		Timer::reset();
+		std::cout << "[" << p << "] thread..." << std::endl;
+		std::cout << "Max min = " << searchMaxMin(mat, r, c, p) << std::endl;
+		Timer::show();
+	}
+	system("pause");
+	return 0;
+}
+
 int main()
 {
-	return symplexMethodSample();
+	return minMaxSearchSample();
 }
