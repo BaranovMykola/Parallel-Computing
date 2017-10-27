@@ -10,7 +10,7 @@
 #include "GaussianMethod.h"
 #include "SymplexMethod.h"
 #include "MatrixMinMax.h"
-
+#include "FloydAlgorithm.h"
 
 int matrixAddingSample()
 {
@@ -159,7 +159,21 @@ int minMaxSearchSample()
 	return 0;
 }
 
+int FloydSample()
+{
+	Mat W = createMat(4, 4);
+	W[0] = new double[4]{ 0,-2,3,-3 };
+	W[1] = new double[4]{ INT_MAX,0,2,INT_MAX };
+	W[2] = new double[4]{ INT_MAX,INT_MAX,0,-3 };
+	W[3] = new double[4]{ 4,5,5,0 };
+	printMatrix(W, 4, 4);
+	auto Wk = Floyd(W, 4);
+	printMatrix(Wk, 4, 4);
+	system("pause");
+	return 0;
+}
+
 int main()
 {
-	return minMaxSearchSample();
+	return FloydSample();
 }

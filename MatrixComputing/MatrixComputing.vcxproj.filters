@@ -39,6 +39,9 @@
     <ClCompile Include="MatrixMinMax.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FloydAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Timer.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MatrixMinMax.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FloydAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
