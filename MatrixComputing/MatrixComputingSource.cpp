@@ -167,7 +167,7 @@ int FloydSample()
 	W[2] = new double[4]{ INT_MAX,INT_MAX,0,-3 };
 	W[3] = new double[4]{ 4,5,5,0 };
 	printMatrix(W, 4, 4);
-	auto Wk = Floyd(W, 4);
+	auto Wk = FloydParallel(W, 4, 4);
 	printMatrix(Wk, 4, 4);
 	system("pause");
 	return 0;
