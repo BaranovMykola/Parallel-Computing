@@ -223,20 +223,23 @@ static const char source[] =
 "       ulong n,\n"
 "       global const double *a,\n"
 "       global const double *b,\n"
-"       global double *c\n"
+"       global double *c,\n"
+"       ulong k\n"
 "       )\n"
 "{\n"
 "    size_t i = get_global_id(0);\n"
 //"    if (i+1 <= n) {\n"
 //"       c[i*(int)sqrt((float)n)+i] = c[i*(int)sqrt((float)n)+i]+1;"
 "int n2 = sqrt((float)n);"
-"c[((i)/n2)*n2+(i%n2)] = ((i)/n2)*n2+(i%n2);"
+"int _i = ((i)/n2);"
+"int _j = (i%n2);"
+"c[_i*n2+_j] = a[_i*n2+k]+a[k*n2+_j] < a[_i*n2+_j] ? a[_i*n2+k]+a[k*n2+_j] : a[_i*n2+_j];"
 //"    }\n"
 "}\n";
 
 int main()
 {
-	const size_t N = 9;
+	const size_t N = 16;
 
 	try
 	{
@@ -315,9 +318,16 @@ int main()
 		cl::Kernel add(program, "add");
 
 		// Prepare input data.
-		std::vector<double> a(N, 0);
+		//	W[0] = new double[4]{ 0,-2,3,-3 };
+		//	W[1] = new double[4]{ INT_MAX,0,2,INT_MAX };
+		//	W[2] = new double[4]{ INT_MAX,INT_MAX,0,-3 };
+		//	W[3] = new double[4]{ 4,5,5,0 };
+		std::vector<double> a{ 0,-2,3,-3,INT_MAX,0,2,INT_MAX ,INT_MAX ,INT_MAX ,0,-3,4,5,5,0 };
 		std::vector<double> b(N, 1);
 		std::vector<double> c(N);
+		for (int z = 0; z < 4; z++)
+		{
+
 
 		// Allocate device buffers and transfer input data to device.
 		cl::Buffer A(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
@@ -334,6 +344,7 @@ int main()
 		add.setArg(1, A);
 		add.setArg(2, B);
 		add.setArg(3, C);
+		add.setArg(4, static_cast<cl_ulong>(z));
 
 		// Launch kernel on the compute device.
 		queue.enqueueNDRangeKernel(add, cl::NullRange, N, cl::NullRange);
@@ -350,14 +361,17 @@ int main()
 				std::cout << std::endl;
 			}
 		}
+		std::cout << std::endl;
+		a = c;
 	}
+		}
 	catch (const cl::Error &err)
 	{
 		std::cerr
 			<< "OpenCL error: "
 			<< err.what() << "(" << err.err() << ")"
 			<< std::endl;
-		return 1;
+	//	return 1;
 	}
 	system("pause");
 }
