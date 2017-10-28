@@ -149,6 +149,7 @@
     <ClCompile Include="MatrixMinMax.cpp" />
     <ClCompile Include="MatrixMultiply.cpp" />
     <ClCompile Include="MatrixProcessing.cpp" />
+    <ClCompile Include="Prima.cpp" />
     <ClCompile Include="SymplexMethod.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="MatrixMinMax.h" />
     <ClInclude Include="MatrixMultiply.h" />
     <ClInclude Include="MatrixProcessing.h" />
+    <ClInclude Include="Prima.h" />
     <ClInclude Include="SymplexMethod.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
