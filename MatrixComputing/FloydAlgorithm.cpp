@@ -135,7 +135,7 @@ std::vector<double> OpenCLFloyd(Mat W, int _k)
 			throw;
 		}
 
-		std::cout << device[0].getInfo<CL_DEVICE_NAME>() << std::endl;
+		std::cout << device[0].getInfo<CL_DEVICE_NAME>() <<"\t";
 
 		cl::CommandQueue queue(context, device[0]);
 
@@ -167,15 +167,6 @@ std::vector<double> OpenCLFloyd(Mat W, int _k)
 			}
 		}
 
-		for (int i = 0;i < N;++i)
-		{
-			std::cout << W_[i] << " ";
-			if ((i + 1) % (int)std::sqrt(N) == 0)
-			{
-				std::cout << std::endl;
-			}
-		}
-
 		std::vector<double> b(N, 1);
 		for (int z = 0; z < _k; z++)
 		{
@@ -203,15 +194,6 @@ std::vector<double> OpenCLFloyd(Mat W, int _k)
 			// Get result back to host.
 			queue.enqueueReadBuffer(C, CL_TRUE, 0, Wk_1.size() * sizeof(double), Wk_1.data());
 
-			for (int i = 0;i < N;++i)
-			{
-				std::cout << Wk_1[i] << " ";
-				if ((i + 1) % (int)std::sqrt(N) == 0)
-				{
-					std::cout << std::endl;
-				}
-			}
-			std::cout << std::endl;
 			W_ = Wk_1;
 		}
 	}

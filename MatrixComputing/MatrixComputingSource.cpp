@@ -199,12 +199,30 @@ int PrimaSample()
 
 int OpenCLFloydSample()
 {
-	Mat W = createMat(4, 4);
-	W[0] = new double[4]{ 0,-2,3,-3 };
-	W[1] = new double[4]{ INT_MAX,0,2,INT_MAX };
-	W[2] = new double[4]{ INT_MAX,INT_MAX,0,-3 };
-	W[3] = new double[4]{ 4,5,5,0 };
-	OpenCLFloyd(W, 4);
+	int k = 600;
+	Mat W = createMat(k, k);
+	generateMatrix(W, k, k);
+
+	std::cout << "Graph with " << k << " vertexes..." << std::endl << std::endl;
+	std::cout << "Run OpenCl Floyd...\t";
+	Timer::reset();
+	OpenCLFloyd(W, k);
+	Timer::show();
+	W = createMat(k, k);
+	generateMatrix(W, k, k);
+	Timer::reset();
+
+	std::cout << "Run Parallel Floyd...\t";
+	Timer::reset();
+	FloydParallel(W, k, 4);
+	Timer::show();
+	W = createMat(k, k);
+	generateMatrix(W, k, k);
+
+	std::cout << "Run Ordinary Floyd...\t";
+	Timer::reset();
+	Floyd(W, k);
+	Timer::show();
 	system("pause");
 	return 0;
 }
