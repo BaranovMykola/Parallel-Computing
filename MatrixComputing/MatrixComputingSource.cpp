@@ -185,7 +185,9 @@ int PrimaSample()
 	g[4] = new double[7]{ 0,7,5,15,0,8,9 };
 	g[5] = new double[7]{ 0,0,0,6,8,0,11 };
 	g[6] = new double[7]{ 0,0,0,0,9,11,0 };
-	Prima(g, k);
+
+	PrimaParallel(g, k, 4);
+
 	system("pause");
 	return 0;
 }
