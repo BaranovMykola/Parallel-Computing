@@ -176,17 +176,22 @@ int FloydSample()
 
 int PrimaSample()
 {
-	int k = 7;
-	Mat g = createMat(7, 7);
-	g[0] = new double[7]{ 0,7,0,5,0,0,0 };
+	int k = 100;
+	Mat g = createMat(k,k);
+	generateMatrix(g, k, k);
+	/*g[0] = new double[7]{ 0,7,0,5,0,0,0 };
 	g[1] = new double[7]{ 7,0,8,9,7,0,0 };
 	g[2] = new double[7]{ 0,8,0,0,5,0,0 };
 	g[3] = new double[7]{ 5,9,0,0,15,6,0 };
 	g[4] = new double[7]{ 0,7,5,15,0,8,9 };
 	g[5] = new double[7]{ 0,0,0,6,8,0,11 };
-	g[6] = new double[7]{ 0,0,0,0,9,11,0 };
-
+	g[6] = new double[7]{ 0,0,0,0,9,11,0 };*/
+	Timer::reset();
+	Prima(g, k);
+	Timer::show();
+	Timer::reset();
 	PrimaParallel(g, k, 4);
+	Timer::show();
 
 	system("pause");
 	return 0;
